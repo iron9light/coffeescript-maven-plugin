@@ -1,0 +1,125 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>iron9light</groupId>
+    <artifactId>coffeescript-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Coffeescript Maven Plugin</name>
+    <description>A Maven plugin for compiling coffeescript into javascript</description>
+    <url>https://github.com/iron9light/coffeescript-maven-plugin</url>
+
+    <scm>
+        <developerConnection>scm:git:git@github.com:iron9light/coffeescript-maven-plugin.git</developerConnection>
+        <url>http://github.com/iron9light/coffeescript-maven-plugin</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>iron9light</id>
+            <name>IL</name>
+            <email>iron9light@gmail.com</email>
+            <url>http://iron9light.wordpress.com</url>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License</name>
+        </license>
+    </licenses>
+
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>sonatype-staging</id>-->
+            <!--<name>oss.sonatype.org Staging Repository</name>-->
+            <!--<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>github-snapshots</id>-->
+            <!--<name>oss.sonatype.org github Release Repository Snapshot Repository</name>-->
+            <!--<url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>-->
+        <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-invoker-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <!--<projectsDirectory>src/it</projectsDirectory>-->
+                    <!--<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>-->
+                    <pomIncludes>
+                        <pomInclude>*/pom.xml</pomInclude>
+                    </pomIncludes>
+                    <settingsFile>src/it/settings.xml</settingsFile>
+                    <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+                    <postBuildHookScript>verify.bsh</postBuildHookScript>
+                    <debug>true</debug>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>install</goal>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r09</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mozilla</groupId>
+            <artifactId>rhino</artifactId>
+            <version>1.7R3</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
