@@ -7,7 +7,7 @@ Configuration options shown are default values and can be ignored for normal use
         <plugin>
           <groupId>iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
-          <version>1.0-SNAPSHOT/version>
+          <version>1.0-SNAPSHOT</version>
           <configuration>
             <srcDir>${basedir}/src/main/webapp</srcDir>
             <outputDir>${basedir}/src/main/webapp</outputDir>
