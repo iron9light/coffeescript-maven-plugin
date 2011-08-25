@@ -1,2 +1,9 @@
-.idea
+# Maven
+target/
+
+src/it/*/target/
+src/it/*/build.log
+
+# IntelliJ IDEA
+.idea/
 *.iml

@@ -1,5 +1,6 @@
 Coffeescript Maven Plugin
 
+Yet another coffeescript maven plugin.
 Configuration options shown are default values and can be ignored for normal use.
 
     <build>
