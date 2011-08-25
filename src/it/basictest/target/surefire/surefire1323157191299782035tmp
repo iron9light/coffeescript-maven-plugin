@@ -1,6 +1,0 @@
-#surefire
-#Thu Aug 25 22:31:50 CST 2011
-user.dir=/home/il/Projects/Mine/coffeescript-maven-plugin/src/it/basictest
-maven.repo.local=/home/il/Projects/Mine/coffeescript-maven-plugin/target/local-repo
-localRepository=/home/il/Projects/Mine/coffeescript-maven-plugin/target/local-repo
-basedir=/home/il/Projects/Mine/coffeescript-maven-plugin/src/it/basictest
