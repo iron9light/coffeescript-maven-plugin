@@ -9,7 +9,7 @@ Love coffeescript. Love Maven. Wanna replace javascript at all.
 Just play with your .coffee like what you did to .js before, and let me take care of the rest:
 
 * Compile (all or modified) coffeescript to javascript.
-* Watch your changing(modify, create, delete, rename) and sync the javascript files soon.
+* Watch your changing (modify, create, delete, rename) and sync the javascript files at the same time.
 
 ## Why another coffeescript maven plugin?
 
@@ -18,14 +18,14 @@ There are two maven plugins can compile coffeescript to javascript, as I know:
 * [brew](https://github.com/jakewins/brew)
 * [coffee-maven-plugin](https://github.com/talios/coffee-maven-plugin)
 
-brew can do more than just compile coffeescript, but indeed it's not work now, see [here](https://github.com/jakewins/brew/issues/4).
+brew can do more than just compile coffeescript, but it's not up to date, see [here](https://github.com/jakewins/brew/issues/4).
 
 coffee-maven-plugin works great, but it is short of some fetures.
 
 ## Requires
 
 * Maven 2
-* Java 7
+* JDK 7
 
 ## Usage
 
@@ -51,7 +51,7 @@ Just add the plugin to your pom:
     </build>
 
 The full pom configuration is here.
-Configuration options shown are default values and can be ignored for normal use. 
+Configuration options shown are default values and can be ignored for normal use.
 
     <build>
       <plugins>
@@ -102,7 +102,7 @@ Compile coffeescript files to javascript files.
 ## Goal:watch
 
     mvn coffeescript:watch
-    
+
 ### Description:
 
 Compile coffeescript files to javascript files, and recompile as soon as a change occurs.
@@ -118,3 +118,12 @@ Compile coffeescript files to javascript files, and recompile as soon as a chang
 * modifiedOnly	Boolean	-	Only compile modified files. Default value is: false.
 * outputDir	File	-	Output Directory. Expression: ${basedir}/src/main/webapp
 * srcDir	File	-	Source Directory. Expression: ${basedir}/src/main/webapp
+
+# License
+
+[The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
+
+# Acknowledgement
+
+* Thank you, [Jeremy Ashkenas](https://github.com/jashkenas). [Coffeescript](https://github.com/jashkenas/coffee-script) Rock!
+* Thank you, [Mark Derricutt](https://github.com/talios). Some of the code are based on your great [coffee-maven-plugin](https://github.com/talios/coffee-maven-plugin).
