@@ -1,5 +1,7 @@
 package iron9light.coffeescriptMavenPlugin;
 
+import org.apache.maven.plugin.MojoFailureException;
+
 import java.io.IOException;
 import java.nio.file.*;
 
@@ -19,7 +21,10 @@ public class CoffeeScriptWatchMojo extends CoffeeScriptMojoBase {
 
     @Override
     protected void doExecute(CoffeeScriptCompiler compiler, Path sourceDirectory, Path outputDirectory) throws Exception {
-        compileCoffeeFilesInDir(compiler, sourceDirectory, outputDirectory);
+        try {
+            compileCoffeeFilesInDir(compiler, sourceDirectory, outputDirectory);
+        } catch (MojoFailureException ignored) {
+        }
         watch(compiler, sourceDirectory, outputDirectory);
     }
 
