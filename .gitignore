@@ -1,8 +1,6 @@
 # Maven
 target/
-
-src/it/*/target/
-src/it/*/build.log
+build.log
 
 # IntelliJ IDEA
 .idea/
