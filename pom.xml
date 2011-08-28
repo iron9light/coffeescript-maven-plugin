@@ -1,7 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>iron9light</groupId>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+  <groupId>com.github.iron9light</groupId>
   <artifactId>coffeescript-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
   <version>1.0-SNAPSHOT</version>
@@ -39,22 +44,23 @@
   </licenses>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
 
-  <!--<distributionManagement>-->
-  <!--<repository>-->
-  <!--<id>sonatype-staging</id>-->
-  <!--<name>oss.sonatype.org Staging Repository</name>-->
-  <!--<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-  <!--</repository>-->
-  <!--<snapshotRepository>-->
-  <!--<id>github-snapshots</id>-->
-  <!--<name>oss.sonatype.org github Release Repository Snapshot Repository</name>-->
-  <!--<url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>-->
-  <!--</snapshotRepository>-->
-  <!--</distributionManagement>-->
+  <distributionManagement>
+    <repository>
+      <id>sonatype-staging</id>
+      <name>oss.sonatype.org Staging Repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
+    <snapshotRepository>
+      <id>github-snapshots</id>
+      <name>oss.sonatype.org github Release Repository Snapshot Repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <profiles>
     <profile>
@@ -95,12 +101,9 @@
             <plugin>
               <artifactId>maven-plugin-plugin</artifactId>
             </plugin>
-            <!--<plugin>-->
-              <!--<artifactId>maven-project-info-reports-plugin</artifactId>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-              <!--<artifactId>maven-jxr-plugin</artifactId>-->
-            <!--</plugin>-->
+            <plugin>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
           </reportPlugins>
         </configuration>
       </plugin>
@@ -108,8 +111,12 @@
         <artifactId>maven-invoker-plugin</artifactId>
         <version>1.5</version>
         <configuration>
-          <!--<projectsDirectory>src/it</projectsDirectory>-->
-          <!--<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>-->
+          <projectsDirectory>src/it</projectsDirectory>
+          <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+          <goals>
+            <goal>clean</goal>
+            <goal>test</goal>
+          </goals>
           <pomIncludes>
             <pomInclude>*/pom.xml</pomInclude>
           </pomIncludes>
@@ -118,7 +125,8 @@
           <postBuildHookScript>verify.bsh</postBuildHookScript>
           <debug>true</debug>
           <ignoreFailures>true</ignoreFailures>
-        </configuration>
+        </configuration>                                                           <!--<projectsDirectory>src/it</projectsDirectory>-->
+          <!--<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>-->
         <executions>
           <execution>
             <id>integration-test</id>

@@ -36,7 +36,7 @@ Just add the plugin to your pom:
       <plugins>
         ...
         <plugin>
-          <groupId>iron9light</groupId>
+          <groupId>com.github.iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
           <version>1.0-SNAPSHOT</version>
           <executions>
@@ -56,7 +56,7 @@ Configuration options shown are default values and can be ignored for normal use
     <build>
       <plugins>
         <plugin>
-          <groupId>iron9light</groupId>
+          <groupId>com.github.iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
           <version>1.0-SNAPSHOT</version>
           <configuration>
