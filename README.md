@@ -31,6 +31,15 @@ coffee-maven-plugin works great, but it is short of some fetures.
 
 Just add the plugin to your pom:
 
+    <pluginRepositories>
+      ...
+      <pluginRepository>
+        <name>oss.sonatype.org</name>
+        <id>oss.sonatype.org</id>
+        <url>http://oss.sonatype.org/content/groups/public</url>
+      </pluginRepository>
+    </pluginRepositories>
+    ...
     <build>
       ...
       <plugins>
