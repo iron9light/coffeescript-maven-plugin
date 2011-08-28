@@ -51,12 +51,12 @@
 
   <distributionManagement>
     <repository>
-      <id>sonatype-staging</id>
+      <id>sonatype-nexus-staging</id>
       <name>oss.sonatype.org Staging Repository</name>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>github-snapshots</id>
+      <id>sonatype-nexus-snapshots</id>
       <name>oss.sonatype.org github Release Repository Snapshot Repository</name>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
