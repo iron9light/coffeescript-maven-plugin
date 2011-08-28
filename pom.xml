@@ -16,8 +16,8 @@
   <url>https://github.com/iron9light/${project.artifactId}</url>
 
   <scm>
-    <connection>scm:git:git://github.com/iron9light/${project.artifactId}.git</connection>
-    <developerConnection>scm:git:git@github.com:iron9light/${project.artifactId}.git</developerConnection>
+    <connection>scm:git://github.com/iron9light/${project.artifactId}.git</connection>
+    <developerConnection>scm:git@github.com:iron9light/${project.artifactId}.git</developerConnection>
     <url>http://github.com/iron9light/coffeescript-maven-plugin</url>
   </scm>
 
