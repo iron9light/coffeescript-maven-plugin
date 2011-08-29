@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public abstract class CoffeeScriptMojoBase extends AbstractMojo {
@@ -72,6 +73,7 @@ public abstract class CoffeeScriptMojoBase extends AbstractMojo {
     abstract protected void doExecute(CoffeeScriptCompiler compiler, Path sourceDirectory, Path outputDirectory) throws Exception;
 
     protected void compileCoffeeFilesInDir(final CoffeeScriptCompiler compiler, final Path sourceDirectory, final Path outputDirectory) throws IOException, MojoFailureException {
+        long startTime = new Date().getTime();
         List<Path> coffeeFiles = findCoffeeFilesInDir(sourceDirectory);
         List<String> failedFileNames = new ArrayList<>();
         for (Path coffeeFile : coffeeFiles) {
@@ -83,9 +85,10 @@ public abstract class CoffeeScriptMojoBase extends AbstractMojo {
             }
         }
 
+        long escapedTime = new Date().getTime() - startTime;
         int compiledCount = coffeeFiles.size() - failedFileNames.size();
         if (compiledCount > 0) {
-            getLog().info(String.format("successful compiled (or skipped) %d coffeescript(s)", compiledCount));
+            getLog().info(String.format("successful compiled (or skipped) %d coffeescript(s) in %.3fs", compiledCount, escapedTime / 1000.0));
         }
 
         if (!failedFileNames.isEmpty()) {
