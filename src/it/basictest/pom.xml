@@ -16,7 +16,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>iron9light</groupId>
+                <groupId>com.github.iron9light</groupId>
                 <artifactId>coffeescript-maven-plugin</artifactId>
                 <version>@project.version@</version>
 

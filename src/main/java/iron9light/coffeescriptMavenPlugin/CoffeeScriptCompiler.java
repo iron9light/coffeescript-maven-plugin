@@ -14,6 +14,7 @@ public class CoffeeScriptCompiler {
 
     private final Scriptable globalScope;
     private boolean bare;
+    public String version;
 
     public CoffeeScriptCompiler(boolean bare) {
 
@@ -24,6 +25,7 @@ public class CoffeeScriptCompiler {
         try {
             globalScope = context.initStandardObjects();
             context.evaluateReader(globalScope, supplier.getInput(), "coffee-script.js", 0, null);
+            version = (String) context.evaluateString(globalScope, "CoffeeScript.VERSION;", "source", 0, null);
         } catch (IOException e1) {
             throw new CoffeeScriptException(e1.getMessage());
         } finally {

@@ -51,6 +51,7 @@ public abstract class CoffeeScriptMojoBase extends AbstractMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         CoffeeScriptCompiler compiler = new CoffeeScriptCompiler(bare);
+        getLog().info(String.format("Coffeescript version: %s", compiler.version));
 
         if (!srcDir.exists()) {
             throw new MojoExecutionException("Source directory not fount: " + srcDir.getPath());
