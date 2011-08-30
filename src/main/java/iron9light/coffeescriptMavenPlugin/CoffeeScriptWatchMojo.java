@@ -4,6 +4,7 @@ import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * Compile coffeescript files to javascript files, and recompile as soon as a change occurs.
@@ -18,6 +19,8 @@ public class CoffeeScriptWatchMojo extends CoffeeScriptMojoBase {
      * @parameter default-value="true"
      */
     private Boolean allowedDelete;
+
+    private static final WatchEvent.Kind<?>[] watchEvents = {StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_DELETE};
 
     @Override
     protected void doExecute(CoffeeScriptCompiler compiler, Path sourceDirectory, Path outputDirectory) throws Exception {
@@ -37,25 +40,48 @@ public class CoffeeScriptWatchMojo extends CoffeeScriptMojoBase {
             }
 
             WatchKey watchKey = watchService.take();
+            Path dir = (Path) watchKey.watchable();
 
             for (WatchEvent<?> event : watchKey.pollEvents()) {
-                Path file = (Path) event.context();
-                if (Files.isDirectory(file) || !isCoffeeFile(file)) {
+                Path file = dir.resolve((Path) event.context());
+                getLog().debug(String.format("%s - %s", event.kind().name(), file));
+//                // try to delete js folder when you delete cs folder. Not work is sub deep > 1.
+//                if (allowedDelete && event.kind().name().equals(StandardWatchEventKinds.ENTRY_DELETE.name())) {
+//                    Path jsDir = outputDirectory.resolve(sourceDirectory.relativize(file));
+//                    try {
+//                        if (Files.isDirectory(jsDir) && Files.deleteIfExists(jsDir)) {
+//                            getLog().info(String.format("delete folder %s with %s", jsDir, file));
+//                            continue;
+//                        }
+//                    } catch (DirectoryNotEmptyException | SecurityException ignored) {
+//                        continue;
+//                    }
+//                } else
+                if (Files.isDirectory(file)) {
+                    getLog().info("is dir");
+                    if (event.kind().name().equals(StandardWatchEventKinds.ENTRY_CREATE.name())) {
+                        // watch created folder.
+                        dir.resolve(file).register(watchService, watchEvents);
+                    }
                     continue;
-                } else {
-                    changed = true;
                 }
 
-                String coffeeFileName = file.toString();
+                if (!isCoffeeFile(file)) {
+                    continue;
+                }
+
+                String coffeeFileName = sourceDirectory.relativize(file).toString();
                 String jsFileName = getJsFileName(coffeeFileName);
                 Path jsFile = outputDirectory.resolve(jsFileName);
 
                 if (event.kind().name().equals(StandardWatchEventKinds.ENTRY_DELETE.name())) {
-                    if (Files.deleteIfExists(jsFile)) {
+                    if (allowedDelete && Files.deleteIfExists(jsFile)) {
                         getLog().info(String.format("deleted %s with %s", jsFileName, coffeeFileName));
+                        changed = true;
                     }
                 } else if (event.kind().name().equals(StandardWatchEventKinds.ENTRY_MODIFY.name()) || event.kind().name().equals(StandardWatchEventKinds.ENTRY_CREATE.name())) {
-                    compileCoffeeFile(compiler, sourceDirectory.resolve(file), jsFile, coffeeFileName, jsFileName);
+                    compileCoffeeFile(compiler, file, jsFile, coffeeFileName, jsFileName);
+                    changed = true;
                 }
             }
 
@@ -64,9 +90,15 @@ public class CoffeeScriptWatchMojo extends CoffeeScriptMojoBase {
     }
 
     private WatchService startWatching(Path sourceDirectory) throws IOException {
-        WatchService watchService = sourceDirectory.getFileSystem().newWatchService();
-        WatchEvent.Kind<?>[] events = {StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_DELETE};
-        sourceDirectory.register(watchService, events);
+        final WatchService watchService = sourceDirectory.getFileSystem().newWatchService();
+
+        Files.walkFileTree(sourceDirectory, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                dir.register(watchService, watchEvents);
+                return FileVisitResult.CONTINUE;
+            }
+        });
         return watchService;
     }
 }
