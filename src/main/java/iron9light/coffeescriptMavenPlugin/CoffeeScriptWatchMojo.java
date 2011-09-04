@@ -44,7 +44,7 @@ public class CoffeeScriptWatchMojo extends CoffeeScriptMojoBase {
 
             for (WatchEvent<?> event : watchKey.pollEvents()) {
                 Path file = dir.resolve((Path) event.context());
-                getLog().debug(String.format("%s - %s", event.kind().name(), file));
+                getLog().debug(String.format("watched %s - %s", event.kind().name(), file));
 //                // try to delete js folder when you delete cs folder. Not work is sub deep > 1.
 //                if (allowedDelete && event.kind().name().equals(StandardWatchEventKinds.ENTRY_DELETE.name())) {
 //                    Path jsDir = outputDirectory.resolve(sourceDirectory.relativize(file));
@@ -58,15 +58,17 @@ public class CoffeeScriptWatchMojo extends CoffeeScriptMojoBase {
 //                    }
 //                } else
                 if (Files.isDirectory(file)) {
-                    getLog().info("is dir");
+                    getLog().debug("is directory");
                     if (event.kind().name().equals(StandardWatchEventKinds.ENTRY_CREATE.name())) {
                         // watch created folder.
-                        dir.resolve(file).register(watchService, watchEvents);
+                        file.register(watchService, watchEvents);
+                        getLog().debug(String.format("watch %s", file));
                     }
                     continue;
                 }
 
                 if (!isCoffeeFile(file)) {
+                    getLog().debug(String.format("skip non-coffeescript"));
                     continue;
                 }
 
@@ -96,6 +98,7 @@ public class CoffeeScriptWatchMojo extends CoffeeScriptMojoBase {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                 dir.register(watchService, watchEvents);
+                getLog().debug(String.format("watch %s", dir));
                 return FileVisitResult.CONTINUE;
             }
         });
