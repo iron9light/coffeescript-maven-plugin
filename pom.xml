@@ -11,9 +11,9 @@
   <url>https://github.com/iron9light/${project.artifactId}</url>
 
   <scm>
-    <connection>scm:git://github.com/iron9light/${project.artifactId}.git</connection>
-    <developerConnection>scm:git@github.com:iron9light/${project.artifactId}.git</developerConnection>
-    <url>git@github.com:iron9light/${project.artifactId}</url>
+    <connection>scm:git:git://github.com/iron9light/${project.artifactId}.git</connection>
+    <developerConnection>scm:git:git@github.com:iron9light/${project.artifactId}.git</developerConnection>
+    <url>git@github.com:iron9light/${project.artifactId}.git</url>
   </scm>
 
   <issueManagement>
