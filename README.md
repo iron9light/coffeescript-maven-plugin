@@ -31,15 +31,6 @@ coffee-maven-plugin works great, but it is short of some fetures.
 
 Just add the plugin to your pom:
 
-    <pluginRepositories>
-      ...
-      <pluginRepository>
-        <name>oss.sonatype.org</name>
-        <id>oss.sonatype.org</id>
-        <url>http://oss.sonatype.org/content/groups/public</url>
-      </pluginRepository>
-    </pluginRepositories>
-    ...
     <build>
       ...
       <plugins>
@@ -47,7 +38,7 @@ Just add the plugin to your pom:
         <plugin>
           <groupId>com.github.iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
-          <version>1.0-SNAPSHOT</version>
+          <version>1.0</version>
           <executions>
             <execution>
               <goals>
