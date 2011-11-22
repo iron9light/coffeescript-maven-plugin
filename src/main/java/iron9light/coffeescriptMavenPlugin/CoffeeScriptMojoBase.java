@@ -7,11 +7,10 @@ import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +19,14 @@ public abstract class CoffeeScriptMojoBase extends AbstractMojo {
     /**
      * Source Directory.
      *
-     * @parameter expression="${basedir}/src/main/webapp"
+     * @parameter default-value="${basedir}/src/main/webapp"
      */
     private File srcDir;
 
     /**
      * Output Directory.
      *
-     * @parameter expression="${basedir}/src/main/webapp"
+     * @parameter default-value="${basedir}/src/main/webapp"
      */
     private File outputDir;
 
@@ -45,12 +44,23 @@ public abstract class CoffeeScriptMojoBase extends AbstractMojo {
      */
     private Boolean modifiedOnly;
 
+    /**
+     * CoffeeScript compiler file url.
+     * It supports both url string and file path string.
+     * e.g. http://coffeescript.org/extras/coffee-script.js or ${basedir}/lib/coffee-script.js
+     *
+     * @parameter
+     */
+    private String compilerUrl;
+
     private static Charset charset = Charsets.UTF_8;
 
     private static String newline = System.getProperty("line.separator");
 
+    private static URL defaultCoffeeScriptUrl = CoffeeScriptMojoBase.class.getResource("/coffee-script.js");
+
     public void execute() throws MojoExecutionException, MojoFailureException {
-        CoffeeScriptCompiler compiler = new CoffeeScriptCompiler(bare);
+        CoffeeScriptCompiler compiler = new CoffeeScriptCompiler(getCoffeeScriptUrl(), bare);
         getLog().info(String.format("Coffeescript version: %s", compiler.version));
 
         if (!srcDir.exists()) {
@@ -162,5 +172,32 @@ public abstract class CoffeeScriptMojoBase extends AbstractMojo {
 
     private String readAllString(Path path) throws IOException {
         return com.google.common.io.Files.toString(path.toFile(), charset);
+    }
+
+    private URL getCoffeeScriptUrl() {
+        getLog().debug(String.format("compilerUrl: %s", compilerUrl));
+
+        if (compilerUrl == null || compilerUrl.isEmpty()) {
+            getLog().debug("CompilerUrl is null or empty, use default.");
+            return defaultCoffeeScriptUrl;
+        }
+
+        URL url;
+        try {
+            getLog().debug("Trying to parse compilerUrl as URL.");
+            url = new URL(compilerUrl);
+        } catch (MalformedURLException e) {
+            try {
+                getLog().debug("Failed parsing compilerUrl as URL. Trying to parse it as Path.");
+                url = Paths.get(compilerUrl).toUri().toURL();
+            } catch (MalformedURLException e1) {
+                getLog().debug("Failed parsing compilerUrl, use default.");
+                return defaultCoffeeScriptUrl;
+            }
+        }
+
+        getLog().info(String.format("Load CoffeeScript compiler from %s", url));
+
+        return url;
     }
 }

@@ -1,0 +1,14 @@
+import java.io.*;
+
+file = new File( basedir, "target/coffee/script/test1.js" );
+if ( !file.isFile() ) {
+  throw new FileNotFoundException( "Could not find generated javascript file: " + file );
+}
+file = new File( basedir, "target/coffee/script/test2.js" );
+if ( !file.isFile() ) {
+  throw new FileNotFoundException( "Could not find generated javascript file: " + file );
+}
+file = new File( basedir, "target/coffee/script/test3.js" );
+if ( !file.isFile() ) {
+  throw new FileNotFoundException( "Could not find generated javascript file: " + file );
+}

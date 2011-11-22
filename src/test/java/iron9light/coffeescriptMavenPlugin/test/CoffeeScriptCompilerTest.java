@@ -2,16 +2,21 @@ package iron9light.coffeescriptMavenPlugin.test;
 
 import iron9light.coffeescriptMavenPlugin.CoffeeScriptCompiler;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author iron9light
  */
 public class CoffeeScriptCompilerTest {
     @Test
-    public void testVersion() {
-        CoffeeScriptCompiler compiler = new CoffeeScriptCompiler(false);
+    public void testVersion() throws MalformedURLException {
+        URL url = getClass().getResource("/coffee-script-1.1.2.js");
+        CoffeeScriptCompiler compiler = new CoffeeScriptCompiler(url, false);
         assertThat(compiler.version, equalTo("1.1.2"));
     }
 }

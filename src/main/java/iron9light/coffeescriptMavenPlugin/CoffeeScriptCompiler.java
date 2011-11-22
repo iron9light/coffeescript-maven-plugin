@@ -9,6 +9,7 @@ import org.mozilla.javascript.Scriptable;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 
 public class CoffeeScriptCompiler {
 
@@ -16,10 +17,10 @@ public class CoffeeScriptCompiler {
     private boolean bare;
     public String version;
 
-    public CoffeeScriptCompiler(boolean bare) {
+    public CoffeeScriptCompiler(URL url, boolean bare) {
 
         this.bare = bare;
-        InputSupplier<InputStreamReader> supplier = Resources.newReaderSupplier(getClass().getResource("/coffee-script-1.1.2.js"), Charsets.UTF_8);
+        InputSupplier<InputStreamReader> supplier = Resources.newReaderSupplier(url, Charsets.UTF_8);
         Context context = Context.enter();
         context.setOptimizationLevel(-1); // Without this, Rhino hits a 64K bytecode limit and fails
         try {
