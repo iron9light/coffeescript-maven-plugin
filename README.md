@@ -38,7 +38,7 @@ Just add the plugin to your pom:
         <plugin>
           <groupId>com.github.iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
-          <version>1.0</version>
+          <version>1.1-SNAPSHOT</version>
           <executions>
             <execution>
               <goals>
@@ -58,13 +58,14 @@ Configuration options shown are default values and can be ignored for normal use
         <plugin>
           <groupId>com.github.iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
-          <version>1.0</version>
+          <version>1.1-SNAPSHOT</version>
           <configuration>
             <srcDir>${basedir}/src/main/webapp</srcDir>
             <outputDir>${basedir}/src/main/webapp</outputDir>
             <bare>false</bare>
             <modifiedOnly>false</modifiedOnly>
             <allowedDelete>true</allowedDelete>
+            <compilerUrl></compilerUrl>
           </configuration>
           <executions>
             <execution>
@@ -98,6 +99,7 @@ Compile coffeescript files to javascript files.
 * modifiedOnly	Boolean	-	Only compile modified files. Default value is: false.
 * outputDir	File	-	Output Directory. Expression: ${basedir}/src/main/webapp
 * srcDir	File	-	Source Directory. Expression: ${basedir}/src/main/webapp
+* compilerUrl   String  -   CoffeeScript compiler file url. It supports both url string and file path string. e.g. http://coffeescript.org/extras/coffee-script.js or ${basedir}/lib/coffee-script.js
 
 ## Goal:watch
 
@@ -118,6 +120,7 @@ Compile coffeescript files to javascript files, and recompile as soon as a chang
 * modifiedOnly	Boolean	-	Only compile modified files. Default value is: false.
 * outputDir	File	-	Output Directory. Expression: ${basedir}/src/main/webapp
 * srcDir	File	-	Source Directory. Expression: ${basedir}/src/main/webapp
+* compilerUrl   String  -   CoffeeScript compiler file url. It supports both url string and file path string. e.g. http://coffeescript.org/extras/coffee-script.js or ${basedir}/lib/coffee-script.js
 
 # License
 
