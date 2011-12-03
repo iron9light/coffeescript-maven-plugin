@@ -15,8 +15,8 @@ import static org.junit.Assert.assertThat;
 public class CoffeeScriptCompilerTest {
     @Test
     public void testVersion() throws MalformedURLException {
-        URL url = getClass().getResource("/coffee-script-1.1.2.js");
+        URL url = getClass().getResource("/coffee-script.js");
         CoffeeScriptCompiler compiler = new CoffeeScriptCompiler(url, false);
-        assertThat(compiler.version, equalTo("1.1.2"));
+        assertThat(compiler.version, equalTo("1.1.3"));
     }
 }
