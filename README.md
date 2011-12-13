@@ -38,7 +38,7 @@ Just add the plugin to your pom:
         <plugin>
           <groupId>com.github.iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
-          <version>1.1-SNAPSHOT</version>
+          <version>1.1</version>
           <executions>
             <execution>
               <goals>
