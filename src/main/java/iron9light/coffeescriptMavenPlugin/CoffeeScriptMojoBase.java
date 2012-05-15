@@ -157,9 +157,9 @@ public abstract class CoffeeScriptMojoBase extends AbstractMojo {
         try {
             String jsSource = compiler.compile(coffeeSource);
             writeString(jsFile, jsSource);
-            getLog().info(String.format("compile %s", coffeeFileName));
+            getLog().info(String.format("Compiled: %s [%s]", coffeeFileName, new java.util.Date()));
         } catch (CoffeeScriptException ex) {
-            getLog().error(String.format("fail %s %s", coffeeFileName, ex.getMessage()));
+            getLog().error(String.format("Error: %s %s [%s]", coffeeFileName, ex.getMessage(), new java.util.Date()));
             return false;
         }
 
