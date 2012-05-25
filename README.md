@@ -20,7 +20,7 @@ There are two maven plugins can compile coffeescript to javascript, as I know:
 
 brew can do more than just compile coffeescript, but it's not up to date, see [here](https://github.com/jakewins/brew/issues/4).
 
-coffee-maven-plugin works great, but it is short of some fetures.
+coffee-maven-plugin works great, but it is short of some features.
 
 ## Requires
 
@@ -38,7 +38,7 @@ Just add the plugin to your pom:
         <plugin>
           <groupId>com.github.iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
-          <version>1.1.1</version>
+          <version>1.1.2</version>
           <executions>
             <execution>
               <goals>
@@ -58,7 +58,7 @@ Configuration options shown are default values and can be ignored for normal use
         <plugin>
           <groupId>com.github.iron9light</groupId>
           <artifactId>coffeescript-maven-plugin</artifactId>
-          <version>1.1.1</version>
+          <version>1.1.2</version>
           <configuration>
             <srcDir>${basedir}/src/main/webapp</srcDir>
             <outputDir>${basedir}/src/main/webapp</outputDir>
