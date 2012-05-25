@@ -35,7 +35,7 @@ public class CoffeeScriptWatchMojo extends CoffeeScriptMojoBase {
         WatchService watchService = startWatching(sourceDirectory);
         for (boolean changed = true; ; ) {
             if (changed) {
-                getLog().info("wait for changing...");
+                getLog().info("Waiting for changes...");
                 changed = false;
             }
 
